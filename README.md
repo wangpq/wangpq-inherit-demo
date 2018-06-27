@@ -573,3 +573,8 @@ json格式的发明人Douglas Crockford，提出了一个object()函数，可以
 ```
 
 目前，jQuery库使用的就是这种继承方法。
+
+
+资料来自于
+
+https://www.w3cschool.cn/jsnote/jsnote-package.html
