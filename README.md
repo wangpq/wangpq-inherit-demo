@@ -29,7 +29,6 @@ Javascript（这里通指es6以前版本）是一种基于对象（object-based�
 　　var dog1 = {}; // 创建一个空对象
        dog1.name = "大宝"; // 按照原型对象的属性赋值
 　　　　dog1.color = "黄色";
-
 　　var dog2 = {};
 　　　　dog2.name = "二宝";
 　　　　dog2.color = "白色";
@@ -49,7 +48,6 @@ Javascript（这里通指es6以前版本）是一种基于对象（object-based�
 　　　　　　name:name,
 　　　　　　color:color
 　　　　}
-
 　　}
 ```
 
@@ -85,12 +83,11 @@ Javascript（这里通指es6以前版本）是一种基于对象（object-based�
 ```bash
 　　var dog1 = Dog("大宝","黄色");
 　　var dog2 = Dog("二宝","白色");
-
 　　alert(dog1.name); // 大宝
 　　alert(dog1.color); // 黄色
 ```
 
-这时cat1和cat2会自动含有一个constructor属性，指向它们的构造函数。
+这时dog1和dog2会自动含有一个constructor属性，指向它们的构造函数。
 
 ```bash
 　　alert(dog1.constructor == Dog); //true
@@ -108,7 +105,7 @@ Javascript还提供了一个instanceof运算符，验证原型对象与实例对
 
 构造函数方法很好用，但是存在一个浪费内存的问题。
 
-请看，我们现在为Dog对象添加一个不变的属性type（种类），再添加一个方法eat（吃）。那么，原型对象Cat就变成了下面这样：
+请看，我们现在为Dog对象添加一个不变的属性type（种类），再添加一个方法eat（吃）。那么，原型对象Dog就变成了下面这样：
 
 ```bash
 　　function Dog(name,color){
@@ -127,10 +124,8 @@ Javascript还提供了一个instanceof运算符，验证原型对象与实例对
 
     var dog1 = Dog("大宝","黄色");
     var dog2 = Dog("二宝","白色");
-
     alert(dog1.type); // 犬科动物
     dog1.eat(); // 喜欢吃骨头
-
 ```
 
 表面上好像没什么问题，但是实际上这样做，有一个很大的弊端。那就是对于每一个实例对象，type属性和eat()方法都是一模一样的内容，每一次生成一个实例，都必须为重复的内容，多占用一些内存。这样既不环保，也缺乏效率。
@@ -153,7 +148,6 @@ Javascript规定，每一个构造函数都有一个prototype属性，指向另�
 　　　　this.name = name;
 　　　　this.color = color;
 　　}
-
 　　Dog.prototype.type = "犬科动物";
 　　Dog.prototype.eat = function(){alert("喜欢吃骨头")};
 ```
@@ -163,7 +157,6 @@ Javascript规定，每一个构造函数都有一个prototype属性，指向另�
 ```bash
     var dog1 = Dog("大宝","黄色");
     var dog2 = Dog("二宝","白色");
-
     alert(dog1.type); // 犬科动物
     dog1.eat(); // 喜欢吃骨头
 ```
@@ -211,4 +204,219 @@ in运算符还可以用来遍历某个对象的所有属性。
 
 ```bash
 　　for(var prop in dog1) { alert("dog1["+prop+"]="+dog1[prop]); }
+```
+
+
+**构造函数的继承**
+
+这个系列，主要介绍了如何"封装"数据和方法，以及如何从原型对象生成实例。
+
+下面我们来介绍，对象之间的"继承"的五种方法。
+
+
+比如，现在有一个"动物"对象的构造函数。
+
+```bash
+　　function Animal(){
+　　　　this.variety = "动物";
+　　}
+```
+
+还有一个"Dog"对象的构造函数。
+
+```bash
+　　function Dog(name,color){
+　　　　this.name = name;
+　　　　this.color = color;
+　　}
+```
+
+怎样才能使"狗"继承"动物"呢？
+
+一、 构造函数绑定
+
+第一种方法也是最简单的方法，使用call或apply方法，将父对象的构造函数绑定在子对象上，即在子对象构造函数中加一行：
+
+```bash
+　　function Dog(name,color){
+    　  Animal.apply(this);
+        //Animal.apply(this, arguments);
+　　　　 //this.name = name;
+　　　　 //this.color = color;
+　　}
+　　var dog1 = new Dog("大宝","黄色");
+　　alert(dog1.variety); // 动物
+```
+
+二、 prototype模式
+
+第二种方法更常见，使用prototype属性。
+
+如果"狗"的prototype对象，指向一个Animal的实例，那么所有"狗"的实例，就能继承Animal了。
+
+```bash
+　　Dog.prototype = new Animal();
+　　Dog.prototype.constructor = Dog;
+　　var dog1 = new Dog("大宝","黄色");
+　　alert(dog1.variety); // 动物
+```
+
+代码的第一行，我们将Dog的prototype对象指向一个Animal的实例。
+
+```bash
+　　Dog.prototype = new Animal();
+```
+
+它相当于完全删除了prototype 对象原先的值，然后赋予一个新值。但是，第二行又是什么意思呢？
+
+```bash
+　　Dog.prototype.constructor = Dog;
+```
+
+原来，任何一个prototype对象都有一个constructor属性，指向它的构造函数。如果没有"Dog.prototype = new Animal();"这一行，Dog.prototype.constructor是指向Dog的；加了这一行以后，Dog.prototype.constructor指向Animal。
+
+```bash
+　　alert(Dog.prototype.constructor == Animal); //true
+```
+
+更重要的是，每一个实例也有一个constructor属性，默认调用prototype对象的constructor属性。
+
+```bash
+　　alert(dog1.constructor == Dog.prototype.constructor); // true
+```
+
+因此，在运行"Dog.prototype = new Animal();"这一行之后，dog1.constructor也指向Animal！
+
+```bash
+　　alert(dog1.constructor == Animal); // true
+```
+
+这显然会导致继承链的紊乱（dog1明明是用构造函数Dog生成的），因此我们必须手动纠正，将Dog.prototype对象的constructor值改为Dog。这就是第二行的意思。
+
+
+这是很重要的一点，编程时务必要遵守。下文都遵循这一点，即如果替换了prototype对象，
+
+```bash
+　　o.prototype = {};
+```
+
+那么，下一步必然是为新的prototype对象加上constructor属性，并将这个属性指回原来的构造函数。
+
+```bash
+　　o.prototype.constructor = o;
+```
+
+三、 直接继承prototype
+
+第三种方法是对第二种方法的改进。由于Animal对象中，不变的属性都可以直接写入Animal.prototype。所以，我们也可以让Dog()跳过 Animal()，直接继承Animal.prototype。
+
+现在，我们先将Animal对象改写：
+
+```bash
+　　function Animal(){ }
+　　Animal.prototype.variety = "动物";
+```
+
+然后，将Dog的prototype对象，然后指向Animal的prototype对象，这样就完成了继承。
+
+```bash
+    Dog.prototype = Animal.prototype;
+    Dog.prototype.constructor = Dog;
+　　var dog1 = new Dog("大宝","黄色");
+　　alert(dog1.variety); // 动物
+```
+
+与前一种方法相比，这样做的优点是效率比较高（不用执行和建立Animal的实例了），比较省内存。缺点是 Dog.prototype和Animal.prototype现在指向了同一个对象，那么任何对Dog.prototype的修改，都会反映到Animal.prototype。
+
+所以，上面这一段代码其实是有问题的。请看第二行
+
+```bash
+    Dog.prototype.constructor = Dog;
+```
+
+这一句实际上把Animal.prototype对象的constructor属性也改掉了！
+
+```bash
+　　alert(Animal.prototype.constructor); // Dog
+```
+
+四、 利用空对象作为中介
+
+由于"直接继承prototype"存在上述的缺点，所以就有第四种方法，利用一个空对象作为中介。
+
+```bash
+    var F = function(){};
+    F.prototype = Animal.prototype;
+    Dog.prototype = new F();
+    Dog.prototype.constructor = Dog;
+```
+
+F是空对象，所以几乎不占内存。这时，修改Dog的prototype对象，就不会影响到Animal的prototype对象。
+
+```bash
+　　alert(Animal.prototype.constructor); // Animal
+```
+
+我们将上面的方法，封装成一个函数，便于使用。
+
+```bash
+　　function extend(Child, Parent) {
+　　　　var F = function(){};
+　　　　F.prototype = Parent.prototype;
+　　　　Child.prototype = new F();
+　　　　Child.prototype.constructor = Child;
+　　　　Child.uber = Parent.prototype;
+　　}
+```
+
+使用的时候，方法如下
+
+```bash
+　　extend(Dog,Animal);
+　　var dog1 = new Dog("大宝","黄色");
+　　alert(dog1.variety); // 动物
+```
+
+这个extend函数，就是YUI库如何实现继承的方法。
+
+另外，说明一点，函数体最后一行
+
+```bash
+　　Child.uber = Parent.prototype;
+```
+
+意思是为子对象设一个uber属性，这个属性直接指向父对象的prototype属性。（uber是一个德语词，意思是"向上"、"上一层"。）这等于在子对象上打开一条通道，可以直接调用父对象的方法。这一行放在这里，只是为了实现继承的完备性，纯属备用性质。
+
+五、 拷贝继承
+
+上面是采用prototype对象，实现继承。我们也可以换一种思路，纯粹采用"拷贝"方法实现继承。简单说，如果把父对象的所有属性和方法，拷贝进子对象，不也能够实现继承吗？这样我们就有了第五种方法。
+
+首先，还是把Animal的所有不变属性，都放到它的prototype对象上。
+
+```bash
+　　function Animal(){}
+　　Animal.prototype.variety = "动物";
+```
+
+然后，再写一个函数，实现属性拷贝的目的。
+
+```bash
+　　function extend2(Child, Parent) {
+　　　　var p = Parent.prototype;
+　　　　var c = Child.prototype;
+　　　　for (var i in p) {
+　　　　　　c[i] = p[i];
+　　　　}
+　　　　c.uber = p;
+　　}
+```
+
+这个函数的作用，就是将父对象的prototype对象中的属性，一一拷贝给Child对象的prototype对象。
+
+使用的时候，这样写：
+
+```bash
+　　extend2(Dog, Animal);
+　　var dog1 = new Dog("大宝","黄色");
+　　alert(dog1.variety); // 动物
 ```
