@@ -17,11 +17,8 @@ Javascript（这里通指es6以前版本）是一种基于对象（object-based�
 
 ```bash
     var Dog = {
-
         name : '',
-
         color : ''
-
     } 
 ```
 
@@ -30,15 +27,11 @@ Javascript（这里通指es6以前版本）是一种基于对象（object-based�
 
 ```bash
 　　var dog1 = {}; // 创建一个空对象
-
        dog1.name = "大宝"; // 按照原型对象的属性赋值
-
 　　　　dog1.color = "黄色";
 
 　　var dog2 = {};
-
 　　　　dog2.name = "二宝";
-
 　　　　dog2.color = "白色";
 ```
 
@@ -52,13 +45,9 @@ Javascript（这里通指es6以前版本）是一种基于对象（object-based�
 
 ```bash
 　　function Dog(name,color) {
-
 　　　　return {
-
 　　　　　　name:name,
-
 　　　　　　color:color
-
 　　　　}
 
 　　}
@@ -69,7 +58,6 @@ Javascript（这里通指es6以前版本）是一种基于对象（object-based�
 
 ```bash
 　　var dog1 = Dog("大宝","黄色");
-
 　　var dog2 = Dog("二宝","白色");
 ```
 
@@ -87,11 +75,8 @@ Javascript（这里通指es6以前版本）是一种基于对象（object-based�
 
 ```bash
 　　function Dog(name,color){
-
 　　　　this.name=name;
-
 　　　　this.color=color;
-
 　　}
 ```
 
@@ -99,11 +84,9 @@ Javascript（这里通指es6以前版本）是一种基于对象（object-based�
 
 ```bash
 　　var dog1 = Dog("大宝","黄色");
-
 　　var dog2 = Dog("二宝","白色");
 
 　　alert(dog1.name); // 大宝
-
 　　alert(dog1.color); // 黄色
 ```
 
@@ -111,7 +94,6 @@ Javascript（这里通指es6以前版本）是一种基于对象（object-based�
 
 ```bash
 　　alert(dog1.constructor == Dog); //true
-
 　　alert(dog1.constructor == Dog); //true
 ```
 
@@ -119,7 +101,6 @@ Javascript还提供了一个instanceof运算符，验证原型对象与实例对
 
 ```bash
 　　alert(dog1 instanceof Dog); //true
-
 　　alert(dog2 instanceof Dog); //true
 ```
 
@@ -131,19 +112,12 @@ Javascript还提供了一个instanceof运算符，验证原型对象与实例对
 
 ```bash
 　　function Dog(name,color){
-
 　　　　 this.name = name;
-
 　　　　 this.color = color;
-
 　　　　 this.type = "犬科动物";
-
 　　　　 this.eat = function(){
-
            alert("喜欢吃骨头");
-
         };
-
 　　}
 ```
 
@@ -152,11 +126,9 @@ Javascript还提供了一个instanceof运算符，验证原型对象与实例对
 ```bash
 
     var dog1 = Dog("大宝","黄色");
-
     var dog2 = Dog("二宝","白色");
 
     alert(dog1.type); // 犬科动物
-
     dog1.eat(); // 喜欢吃骨头
 
 ```
@@ -178,15 +150,11 @@ Javascript规定，每一个构造函数都有一个prototype属性，指向另�
 
 ```bash
 　　function Dog(name,color){
-
 　　　　this.name = name;
-
 　　　　this.color = color;
-
 　　}
 
 　　Dog.prototype.type = "犬科动物";
-
 　　Dog.prototype.eat = function(){alert("喜欢吃骨头")};
 ```
 
@@ -194,11 +162,9 @@ Javascript规定，每一个构造函数都有一个prototype属性，指向另�
 
 ```bash
     var dog1 = Dog("大宝","黄色");
-
     var dog2 = Dog("二宝","白色");
 
     alert(dog1.type); // 犬科动物
-
     dog1.eat(); // 喜欢吃骨头
 ```
 
@@ -218,26 +184,31 @@ Javascript规定，每一个构造函数都有一个prototype属性，指向另�
 
 这个方法用来判断，某个proptotype对象和某个实例之间的关系。
 
+```bash
 　　alert(Dog.prototype.isPrototypeOf(dog1)); //true
-
 　　alert(Dog.prototype.isPrototypeOf(dog2)); //true
+```
 
 6.2 hasOwnProperty()
 
 每个实例对象都有一个hasOwnProperty()方法，用来判断某一个属性到底是本地属性，还是继承自prototype对象的属性。
 
+```bash
 　　alert(dog1.hasOwnProperty("name")); // true
-
 　　alert(dog1.hasOwnProperty("type")); // false
+```
 
 6.3 in运算符
 
 in运算符可以用来判断，某个实例是否含有某个属性，不管是不是本地属性。
 
+```bash
 　　alert("name" in dog1); // true
-
 　　alert("type" in dog1); // true
+```
 
 in运算符还可以用来遍历某个对象的所有属性。
 
+```bash
 　　for(var prop in dog1) { alert("dog1["+prop+"]="+dog1[prop]); }
+```
