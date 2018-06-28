@@ -10,7 +10,7 @@ Javascript（这里通指es6以前版本）是一种基于对象（object-based�
 那么，如果我们要把"属性"（property）和"方法"（method），封装成一个对象，甚至要从原型对象生成一个实例对象，我们应该怎么做呢？
 
 
-一、 生成实例对象的原始模式
+# 一、 生成实例对象的原始模式
 
 
 假定我们把Dog看成一个对象，它有"名字"和"颜色"两个属性。
@@ -37,7 +37,7 @@ Javascript（这里通指es6以前版本）是一种基于对象（object-based�
 好了，这就是最简单的封装了，把两个属性封装在一个对象里面。但是，这样的写法有两个缺点，一是如果多生成几个实例，写起来就非常麻烦；二是实例与原型之间，没有任何办法，可以看出有什么联系。
 
 
-二、 原始模式的改进
+# 二、 原始模式的改进
 
 
 我们可以写一个函数，解决代码重复的问题。
@@ -62,7 +62,7 @@ Javascript（这里通指es6以前版本）是一种基于对象（object-based�
 这种方法的问题依然是，dog1和dog2之间没有内在的联系，不能反映出它们是同一个原型对象的实例。
 
 
-三、 构造函数模式
+# 三、 构造函数模式
 
 
 为了解决从原型对象生成实例的问题，Javascript提供了一个构造函数（Constructor）模式。
@@ -101,7 +101,7 @@ Javascript还提供了一个instanceof运算符，验证原型对象与实例对
 　　alert(dog2 instanceof Dog); //true
 ```
 
-四、构造函数模式的问题
+# 四、构造函数模式的问题
 
 构造函数方法很好用，但是存在一个浪费内存的问题。
 
@@ -137,7 +137,7 @@ Javascript还提供了一个instanceof运算符，验证原型对象与实例对
 
 回答是可以的。那就是我们下面将要讲的Prototype模式。
 
-五、 Prototype模式
+# 五、 Prototype模式
 
 Javascript规定，每一个构造函数都有一个prototype属性，指向另一个对象。这个对象的所有属性和方法，都会被构造函数的实例继承。
 
@@ -168,12 +168,12 @@ Javascript规定，每一个构造函数都有一个prototype属性，指向另�
 ```
 
 
-六、 Prototype模式的验证方法
+# 六、 Prototype模式的验证方法
 
 
 为了配合prototype属性，Javascript定义了一些辅助方法，帮助我们使用它。
 
-6.1 isPrototypeOf()
+## 6.1 isPrototypeOf()
 
 这个方法用来判断，某个proptotype对象和某个实例之间的关系。
 
@@ -182,7 +182,7 @@ Javascript规定，每一个构造函数都有一个prototype属性，指向另�
 　　alert(Dog.prototype.isPrototypeOf(dog2)); //true
 ```
 
-6.2 hasOwnProperty()
+## 6.2 hasOwnProperty()
 
 每个实例对象都有一个hasOwnProperty()方法，用来判断某一个属性到底是本地属性，还是继承自prototype对象的属性。
 
@@ -191,7 +191,7 @@ Javascript规定，每一个构造函数都有一个prototype属性，指向另�
 　　alert(dog1.hasOwnProperty("type")); // false
 ```
 
-6.3 in运算符
+## 6.3 in运算符
 
 in运算符可以用来判断，某个实例是否含有某个属性，不管是不是本地属性。
 
@@ -233,7 +233,7 @@ in运算符还可以用来遍历某个对象的所有属性。
 
 怎样才能使"狗"继承"动物"呢？
 
-一、 构造函数绑定
+# 一、 构造函数绑定
 
 第一种方法也是最简单的方法，使用call或apply方法，将父对象的构造函数绑定在子对象上，即在子对象构造函数中加一行：
 
@@ -248,7 +248,7 @@ in运算符还可以用来遍历某个对象的所有属性。
 　　alert(dog1.variety); // 动物
 ```
 
-二、 prototype模式
+# 二、 prototype模式
 
 第二种方法更常见，使用prototype属性。
 
@@ -306,7 +306,7 @@ in运算符还可以用来遍历某个对象的所有属性。
 　　o.prototype.constructor = o;
 ```
 
-三、 直接继承prototype
+# 三、 直接继承prototype
 
 第三种方法是对第二种方法的改进。由于Animal对象中，不变的属性都可以直接写入Animal.prototype。所以，我们也可以让Dog()跳过 Animal()，直接继承Animal.prototype。
 
@@ -340,7 +340,7 @@ in运算符还可以用来遍历某个对象的所有属性。
 　　alert(Animal.prototype.constructor); // Dog
 ```
 
-四、 利用空对象作为中介
+# 四、 利用空对象作为中介
 
 由于"直接继承prototype"存在上述的缺点，所以就有第四种方法，利用一个空对象作为中介。
 
@@ -387,7 +387,7 @@ F是空对象，所以几乎不占内存。这时，修改Dog的prototype对象�
 
 意思是为子对象设一个uber属性，这个属性直接指向父对象的prototype属性。（uber是一个德语词，意思是"向上"、"上一层"。）这等于在子对象上打开一条通道，可以直接调用父对象的方法。这一行放在这里，只是为了实现继承的完备性，纯属备用性质。
 
-五、 拷贝继承
+# 五、 拷贝继承
 
 上面是采用prototype对象，实现继承。我们也可以换一种思路，纯粹采用"拷贝"方法实现继承。简单说，如果把父对象的所有属性和方法，拷贝进子对象，不也能够实现继承吗？这样我们就有了第五种方法。
 
@@ -425,7 +425,7 @@ F是空对象，所以几乎不占内存。这时，修改Dog的prototype对象�
 
 **非构造函数的继承**
 
-一、什么是"非构造函数"的继承？
+# 一、什么是"非构造函数"的继承？
 
 比如，现在有一个对象，叫做"中国人"。
 
@@ -447,7 +447,7 @@ F是空对象，所以几乎不占内存。这时，修改Dog的prototype对象�
 
 这里要注意，这两个对象都是普通对象，不是构造函数，无法使用构造函数方法实现"继承"。
 
-二、object()方法
+# 二、object()方法
 
 json格式的发明人Douglas Crockford，提出了一个object()函数，可以做到这一点。
 
@@ -479,7 +479,7 @@ json格式的发明人Douglas Crockford，提出了一个object()函数，可以
 　　alert(Doctor.nation); //中国
 ```
 
-三、浅拷贝
+# 三、浅拷贝
 
 除了使用"prototype链"以外，还有另一种思路：把父对象的属性，全部拷贝给子对象，也能实现继承。
 
@@ -533,7 +533,7 @@ json格式的发明人Douglas Crockford，提出了一个object()函数，可以
 
 所以，extendCopy()只是拷贝基本类型的数据，我们把这种拷贝叫做"浅拷贝"。这是早期jQuery实现继承的方式。
 
-四、深拷贝
+# 四、深拷贝
 
 所谓"深拷贝"，就是能够实现真正意义上的数组和对象的拷贝。它的实现并不难，只要递归调用"浅拷贝"就行了。
 
@@ -575,4 +575,5 @@ json格式的发明人Douglas Crockford，提出了一个object()函数，可以
 目前，jQuery库使用的就是这种继承方法。
 
 
-以上资料来自于 https://www.w3cschool.cn/jsnote/jsnote-package.html
+
+资料来自于 https://www.w3cschool.cn/jsnote/jsnote-package.html
