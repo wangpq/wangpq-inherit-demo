@@ -241,8 +241,8 @@ in运算符还可以用来遍历某个对象的所有属性。
 　　function Dog(name,color){
     　  Animal.apply(this);
         //Animal.apply(this, arguments);
-　　　　 //this.name = name;
-　　　　 //this.color = color;
+　　　　 this.name = name;
+　　　　 this.color = color;
 　　}
 　　var dog1 = new Dog("大宝","黄色");
 　　alert(dog1.variety); // 动物
