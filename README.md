@@ -123,8 +123,8 @@ Javascript还提供了一个instanceof运算符，验证原型对象与实例对
 
 ```bash
 
-    var dog1 = Dog("大宝","黄色");
-    var dog2 = Dog("二宝","白色");
+    var dog1 =new Dog("大宝","黄色");
+    var dog2 =new Dog("二宝","白色");
     alert(dog1.type); // 犬科动物
     dog1.eat(); // 喜欢吃骨头
 ```
@@ -156,8 +156,8 @@ Javascript规定，每一个构造函数都有一个prototype属性，指向另�
 然后，生成实例。
 
 ```bash
-    var dog1 = Dog("大宝","黄色");
-    var dog2 = Dog("二宝","白色");
+    var dog1 =new Dog("大宝","黄色");
+    var dog2 =new Dog("二宝","白色");
     alert(dog1.type); // 犬科动物
     dog1.eat(); // 喜欢吃骨头
 ```
