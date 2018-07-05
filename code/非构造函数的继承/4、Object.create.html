@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<script>
+
+    var Chinese = {
+        nation:'中国'
+    };
+
+　　var Doctor = Object.create(Chinese);
+　　Doctor.career = '医生';
+　　Doctor.sayHello = function(){
+      return "我是一名"+Doctor.nation+Doctor.career;
+   };
+　　alert(Doctor.nation); //中国
+　　alert(Doctor.sayHello()); //中国
+
+
+</script>
+
+</body>
+</html>
