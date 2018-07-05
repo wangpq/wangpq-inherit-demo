@@ -81,8 +81,8 @@ Javascript（这里通指es6以前版本）是一种基于对象（object-based�
 我们现在就可以生成实例对象了。
 
 ```bash
-　　var dog1 = Dog("大宝","黄色");
-　　var dog2 = Dog("二宝","白色");
+　　var dog1 = new Dog("大宝","黄色");
+　　var dog2 = new Dog("二宝","白色");
 　　alert(dog1.name); // 大宝
 　　alert(dog1.color); // 黄色
 ```
