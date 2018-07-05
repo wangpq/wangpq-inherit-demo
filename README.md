@@ -198,7 +198,7 @@ in运算符可以用来判断，某个实例是否含有某个属性，不管是
 
 ```bash
 　　alert("name" in dog1); // true
-　　alert("type" in dog1); // true
+　　alert("type" in dog1); // false
 ```
 
 in运算符还可以用来遍历某个对象的所有属性。
