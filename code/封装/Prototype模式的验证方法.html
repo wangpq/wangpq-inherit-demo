@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<script>
+
+　　function Dog(name,color){
+　　　　 this.name = name;
+　　　　 this.color = color;
+　　}
+
+    var dog1 =new Dog("大宝","黄色");
+    var dog2 =new Dog("二宝","白色");
+
+　　//alert(Dog.prototype.isPrototypeOf(dog1)); //true
+　　//alert(Dog.prototype.isPrototypeOf(dog2)); //true
+
+　　//alert(dog1.hasOwnProperty("name")); // true
+　　//alert(dog1.hasOwnProperty("type")); // false
+
+　　//alert("name" in dog1); // true
+　　//alert("type" in dog1); // false
+
+　　for(var prop in dog1) { alert("dog1["+prop+"]="+dog1[prop]); }
+
+</script>
+
+</body>
+</html>

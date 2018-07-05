@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<script>
+
+　　function Dog(name,color){
+　　　　 this.name = name;
+　　　　 this.color = color;
+　　　　 this.type = "犬科动物";
+　　　　 this.eat = function(){
+           alert("喜欢吃骨头");
+        };
+　　}
+
+    var dog1 =new Dog("大宝","黄色");
+    var dog2 =new Dog("二宝","白色");
+    alert(dog1.type); // 犬科动物
+    dog1.eat(); // 喜欢吃骨头
+
+　　alert(dog1.eat == dog2.eat); //false
+
+</script>
+
+</body>
+</html>

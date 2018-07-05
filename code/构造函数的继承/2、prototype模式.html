@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<script>
+　　function Animal(){
+　　　　this.variety = "动物";
+       this.getVariety= function(){
+            return "我是"+this.variety;
+        }
+　　}
+
+　　function Dog(name,color){
+　　　　 this.name = name;
+　　　　 this.color = color;
+　　   　this.species = "犬科";
+　　}
+
+    Dog.prototype = new Animal();
+    Dog.prototype.constructor = Dog;
+
+    Dog.prototype.sayHello=function(){
+        return "我是"+this.name+",肤色为"+this.color+","+　this.species+"动物";
+    }
+
+　　var dog1 = new Dog("大宝","黄色");
+　　alert(dog1.variety); // 动物
+　　alert(dog1.sayHello()); // 我是大宝,肤色为黄色,犬科动物
+
+
+    /*
+    如果替换了prototype对象，
+
+　　o.prototype = {};
+
+    那么，下一步必然是为新的prototype对象加上constructor属性，并将这个属性指回原来的构造函数。
+
+　　o.prototype.constructor = o;
+
+    */
+</script>
+
+</body>
+</html>

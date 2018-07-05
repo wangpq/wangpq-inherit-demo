@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<script>
+
+　　function extend(Child, Parent) {
+　　　　var p = Parent.prototype;
+　　　　var c = Child.prototype;
+       //Parent.prototype.constructor=Parent;
+　　　　for (var i in p) {
+　　　　　　c[i] = p[i];
+　　　　}
+　　　　c.uber = p;
+　　}
+
+　　function Animal(){}
+    
+    Animal.prototype={
+        variety : "动物",
+        getVariety : function(){
+            return "我是"+this.variety; 
+        }
+    }
+    //Animal.prototype.constructor=Animal;
+
+　　function Dog(name,color){
+　　　　 this.name = name;
+　　　　 this.color = color;
+　　   　this.species = "犬科";
+　　}
+
+　  extend(Dog,Animal);
+
+    Dog.prototype.sayHello=function(){
+        return "我是"+this.name+",肤色为"+this.color+","+　this.species+"动物";
+    }
+
+　　var dog1 = new Dog("大宝","黄色");
+　　alert(dog1.variety); // 动物
+　　alert(dog1.sayHello()); // 我是大宝,肤色为黄色,犬科动物
+   //alert(Animal.prototype.constructor) 
+    alert(Dog.prototype.constructor) 
+
+</script>
+
+</body>
+</html>

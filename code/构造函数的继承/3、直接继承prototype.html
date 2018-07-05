@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<script>
+　　function Animal(){
+        /*
+        this.variety = "动物";
+        this.getVariety= function(){
+            return "我是"+this.variety;
+        }
+        */
+　　}
+    
+    Animal.prototype={
+        variety : "动物",
+        getVariety : function(){
+            return "我是"+this.variety; 
+        }
+    }
+
+　　function Dog(name,color){
+　　　　 this.name = name;
+　　　　 this.color = color;
+　　   　this.species = "犬科";
+　　}
+
+    Dog.prototype = Animal.prototype;
+    Dog.prototype.constructor = Dog;
+
+    Dog.prototype.sayHello=function(){
+        return "我是"+this.name+",肤色为"+this.color+","+　this.species+"动物";
+    }
+
+　　var dog1 = new Dog("大宝","黄色");
+　　alert(dog1.variety); // 动物
+　　alert(dog1.sayHello()); // 我是大宝,肤色为黄色,犬科动物
+    alert(Animal.prototype.constructor==Animal) // false
+    alert(Animal.prototype.constructor==Dog) // true
+    
+    /*
+       优点 : 效率比较高（不用执行和建立Animal的实例了），比较省内存。
+       缺点 :  Dog.prototype和Animal.prototype现在指向了同一个对象，那么任何对Dog.prototype的修改，都会反映到Animal.prototype。
+
+    */
+
+    /*
+
+     注意：
+
+     直接继承prototype的这种方式，在父函数Animal内部声明的属性和方法，无法继承到子函数中。
+
+    */
+</script>
+
+</body>
+</html>
