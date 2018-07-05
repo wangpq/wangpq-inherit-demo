@@ -55,8 +55,8 @@ Javascript（这里通指es6以前版本）是一种基于对象（object-based�
 然后生成实例对象，就等于是在调用函数：
 
 ```bash
-　　var dog1 = Dog("大宝","黄色");
-　　var dog2 = Dog("二宝","白色");
+　　var dog1 = Dog("大宝","黄色");  // var dog1 = new Dog("大宝","黄色");
+　　var dog2 = Dog("二宝","白色");  // var dog2 = new Dog("二宝","白色");
 ```
 
 这种方法的问题依然是，dog1和dog2之间没有内在的联系，不能反映出它们是同一个原型对象的实例。
@@ -86,6 +86,7 @@ Javascript（这里通指es6以前版本）是一种基于对象（object-based�
 　　alert(dog1.name); // 大宝
 　　alert(dog1.color); // 黄色
 ```
+注意，构造函数生成实例对象必须使用new，如果像普通函数 Dog("大宝","黄色") 这样使用，将会出错。
 
 这时dog1和dog2会自动含有一个constructor属性，指向它们的构造函数。
 
